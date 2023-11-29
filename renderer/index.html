@@ -16,12 +16,34 @@
         </div>
     </div>
     <div id="appmnt-page" class="hidden">
-        <p>temp</p>
+        <div class="topnav">
+            <button id="back" onclick="return_to_main()">↩</button>
+            <button id="add-appointment">+</button>
+            <div class="dropdown">
+                <button class="dropbtn">Groomers▼</button>
+                <div class="dropdown-content">
+                    <a href="#">name1</a>
+                    <a href="#">name2</a>
+                    <a href="#">name3</a>
+                </div>
+              </div> 
+        </div>
     </div>
-    <div id="cust-page" class="hidden topnav">
-        <button id="back" onclick="return_to_main()">↩</button>
-        <button id="add-customer">+</button>
-        <input type="text" placeholder="Search...">
+    <div id="cust-page" class="hidden">
+        <div class="topnav">
+            <button id="back" onclick="return_to_main()">↩</button>
+            <button id="add-customer">+</button>
+            <input type="text" placeholder="Search...">
+        </div>
+        <div id="cust-table-container" class="hidden">
+            <table id="cust-table">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone Number</th>
+                </tr>
+            </table>
+        </div> 
     </div>
 </body>
 </html> 
