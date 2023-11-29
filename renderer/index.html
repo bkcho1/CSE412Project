@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Work in Progress</title>
+    <script src="./renderer.js" defer></script>
+    <title>Doogie Doo's Helper App</title>
 </head>
 <body style="background-color: white">
-    <div class="center">
-        <h1 id="title">Doggie Doo's Scheduling Book</h1>
+    <div id="main-menu-container">
+        <h1 id="title">Doggie Doo's Scheduling & Customer Book</h1>
         <div class = main-menu-btns>
-            <button>Appointments</button>
-            <button>Customers</button>
+            <button id ="appmnt-btn" onclick="render_appmnt_page()">Appointments</button>
+            <button id="cust-btn" onclick="render_cust_page()">Customers</button>
         </div>
+    </div>
+    <div id="appmnt-page" class="hidden">
+        <p>temp</p>
+    </div>
+    <div id="cust-page" class="hidden topnav">
+        <button id="back" onclick="return_to_main()">↩</button>
+        <button id="add-customer">+</button>
+        <input type="text" placeholder="Search...">
     </div>
 </body>
 </html> 
