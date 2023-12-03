@@ -1,24 +1,10 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const sequelize = require('./sql/sequelize');
-const Customer = require('./sql/models');
-const Dog = require('./sql/models');
-const Groomer = require('./sql/models');
-const Scheduler = require('./sql/models');
-
-/*
- * middle layer shenanigans 
- */
-const express = require('express');
-const expressApp = express();
-const custRouter = require('./routes/customers');
-const appmntRouter = require('./routes/appointments');
-
-expressApp.set('view engine', 'ejs');
-
-expressApp.use(express.static("renderer"));
-expressApp.use('/customers', custRouter);
-expressApp.use('/appointments', appmntRouter);
+const Customer = require('./sql/models/customer');
+const Dog = require('./sql/models/dog');
+const Groomer = require('./sql/models/groomer');
+const Scheduler = require('./sql/models/scheduler');
 
 /*
 * creating the windows and front end
@@ -30,25 +16,22 @@ function createWindow() {
         width: 800,
         height: 700,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
         }
     });
 
-    mainWindow.loadURL('http://localhost:3000/');
-    mainWindow.removeMenu();
+    mainWindow.loadFile('./renderer/index.html');
+    //mainWindow.removeMenu();
 }
 
 sequelize.sync({ alter: true }).then(() => {
     console.log('Connection has been established successfully.');
     app.whenReady().then(() => {
         createWindow();
-        
-        const server = expressApp.listen(3000, () => {
-            console.log('Express server is running on http://localhost:3000');
-        });
     });
 });
-
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -63,3 +46,31 @@ app.on('before-quit', () => {
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
 });
+
+ipcMain.on('add-groomer', (e, options) => {
+    new_groomer(options);
+});
+
+async function new_groomer({ groomer_first_name, groomer_last_name }) {
+    try {
+        const g = await Groomer.create({ firstName: groomer_first_name, lastName: groomer_last_name });
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+ipcMain.on('get-groomers', () => {
+    get_groomers();
+});
+
+async function get_groomers() {
+    try {
+        Groomer.findAll().then(g_data => {
+            mainWindow.webContents.send('got-groomers', JSON.stringify(g_data, null, 2));
+        });
+    }
+    catch(err) {
+        console.log(err)
+    }
+}
