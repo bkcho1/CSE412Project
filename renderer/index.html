@@ -21,40 +21,148 @@
         <div class="topnav">
             <button class="topnav-btn back">↩</button>
             <div class="dropdown" data-dropdown>
-                <button id="add-appointment" class="topnav-btn" data-dropdown-button>+</button>
+                <button class="topnav-btn" data-dropdown-button>+</button>
                 <div class="dropdown-menu">
-                    Dropdown Content
+                    <form id="add-appointment" class="dropdown-form">
+                        <p>Add an Appointment</p>
+                        <label>Groomer:</label>
+                        <select id="agid-container">
+                        </select>
+                        <label>Customer First Name:</label>
+                        <input type="text" name="acfname" id="acfname" required></input>
+                        <label>Customer Last Name:</label>
+                        <input type="text" name="aclname" id="aclname" required></input>
+                        <label>Customer Phone Number:</label>
+                        <input type="text" name="acphonenum" id="acphonenum" required></input>
+                        <label>Date:</label>
+                        <input type="date" name="adate" id="adate" required></input>
+                        <label>Time:</label>
+                        <input type="time" name="atime" id="atime" min="07:30" max="17:30" required></inut>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
-            <button id="remove-appointment" class="topnav-btn">-</button>
+
             <div class="dropdown" data-dropdown>
-                <button class="topnav-btn" data-dropdown-button>Groomers</button>
+                <button class="topnav-btn" data-dropdown-button>-</button>
                 <div class="dropdown-menu">
-                    Dropdown Content
+                    <form id="remove-appointment" class="dropdown-form">
+                        <p>Remove an Appointment</p>
+                        <label>Groomer:</label>
+                        <select id="agid-container-r">
+                        </select>
+                        <label>Customer First Name:</label>
+                        <input type="text" name="racfname" id="racfname" required></input>
+                        <label>Customer Last Name:</label>
+                        <input type="text" name="raclname" id="raclname" required></input>
+                        <label>Customer Phone Number:</label>
+                        <input type="text" name="racphonenum" id="racphonenum" required></input>
+                        <label>Date:</label>
+                        <input type="date" name="radate" id="radate" required></input>
+                        <label>Time:</label>
+                        <input type="time" name="ratime" id="ratime" min="07:30" max="17:30" required></input>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
+            
+            <select id="name-container">
+            </select>
+            <input id="appointment-date" type="date"></input>
         </div>
+        <div>
+            <table class="list">
+                <tr>
+                    <th>Time</th>
+                    <th>Customer</th>
+                    <th>Dog(s)</th>
+                </tr>
+
+                <tbody id="appointment-list">
+                </tbody>
+            </table>
+        </div> 
     </div>
 
     <div id="cust-page" class="hidden">
         <div class="topnav">
             <button class="topnav-btn back">↩</button>
             <div class="dropdown" data-dropdown>
-                <button id="add-customer" class="topnav-btn" data-dropdown-button>+</button>
+                <button class="topnav-btn" data-dropdown-button>+</button>
                 <div class="dropdown-menu">
-                    Dropdown Content
+                    <form id="add-customer" class="dropdown-form">
+                        <p>Add a Customer</p>
+                        <label>First Name:</label>
+                        <input type="text" name="cfname" id="cfname" required></input>
+                        <label>Last Name:</label>
+                        <input type="text" name="clname" id="clname" required></input>
+                        <label>Phone Number:</label>
+                        <input type="text" name="cphonenum" id="cphonenum" required></input>
+                        <label>Address</label>
+                        <input type="text" name="caddress" id="caddress"></input>
+                        <label>Email:</label>
+                        <input type="text" name="cemail" id="cemail"></input>
+                        <label># of Dogs</label>
+                        <input type="number" name="ndogs" id="ndogs" required></input>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <form id="add-dog" class="dropdown-form hidden">
+                        <p>Add Dog(s)</p> 
+                        <label>Name:</label>
+                        <input type="text" name="dname" id="dname" required></input>
+                        <label>Breed:</label>
+                        <input type="text" name="dbreed" id="dbreed"></input>
+                        <label>Age (Years):</label>
+                        <input type="number" name="dage" id="dage" required></input>
+                        <label>Special Instructions:</label>
+                        <textarea name="dsi" id="dsi" rows="3"></textarea>
+                        <label>Health Conditions</label>
+                        <textarea name="dhc" id="dhc" rows="3"></textarea>
+                        <label>Comment(s)</label>
+                        <textarea name="dcomment" id="dcomment" rows="3"></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
-            <button id="delete-customer" class="topnav-btn">-</button>
-            <input type="text" placeholder="Search...">
+            <div class="dropdown" data-dropdown>
+                <button class="topnav-btn" data-dropdown-button="">-</button>
+                <div class="dropdown-menu">
+                    <button id="cust-remove-reload" class="hidden">↻</button>
+                    <div id="remove-btn-container">
+                        <button id="id-removal">Remove by ID</button>
+                        <button id="name-phone-removal">Remove by Name/Phone</button>
+                    </div>
+                    <form id="remove-customer-by-id" class="dropdown-form hidden">
+                        <p>Remove a Customer by ID</p>
+                        <label>ID:</label>
+                        <input type="number" name="cid" id="cid" min="1" required></input>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <form id="remove-customer-by-name-phone" class="dropdown-form hidden">
+                        <p>Remove a Customer by Name/Phone Number</p>
+                        <label>First Name:</label>
+                        <input type="text" name="rcfname" id="rcfname" required></input>
+                        <label>Last Name:</label>
+                        <input type="text" name="rclname" id="rclname" required></input>
+                        <label>Phone Number:</label>
+                        <input type="text" name="rcfname" id="rcphone" required></input>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>  
+            </div>
+            <input id="cust-search" type="text" placeholder="Search...">
         </div>
-        <div id="cust-table-container" class="hidden">
+        <div>
             <table class="list">
                 <tr>
+                    <th>id</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Phone Number</th>
                 </tr>
+
+                <tbody id="customer-list">
+                </tbody>
             </table>
         </div> 
     </div>
@@ -63,9 +171,10 @@
         <div class="topnav">
             <button class="topnav-btn back">↩</button>
             <div class="dropdown" data-dropdown>
-                <button id="add-groomer" class="topnav-btn" data-dropdown-button>+</button>
+                <button class="topnav-btn" data-dropdown-button>+</button>
                 <div class="dropdown-menu">
-                    <form id="new-groomer">
+                    <form id="add-groomer" class="dropdown-form">
+                        <p>Add a Groomer</p>
                         <label>First Name:</label>
                         <input type="text" name="gfname" id="gfname" required></input>
                         <label>Last Name:</label>
@@ -74,7 +183,17 @@
                     </form>
                 </div>
             </div>
-            <button id="remove-groomer" class="topnav-btn">-</button>
+            <div class="dropdown" data-dropdown>
+                <button class="topnav-btn" data-dropdown-button>-</button>
+                <div class="dropdown-menu">
+                    <form id="remove-groomer" class="dropdown-form">
+                        <p>Remove a Groomer</p>
+                        <label>ID:</label>
+                        <input type="number" name="gid" id="gid" min="1" required></input>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div> 
         </div>
 
         <div>

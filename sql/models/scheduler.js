@@ -4,19 +4,36 @@ const Customer = require('./customer');
 const Groomer = require('./groomer');
 
 const Scheduler = sequelize.define('Scheduler', {
+    gid: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Groomer,
+            key: "id"
+        },
+        primaryKey: true
+    },
+    cid: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Customer,
+            key: "id"
+        },
+        primaryKey: true
+    },
     date: {
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATEONLY,
+        primaryKey: true
     },
     time: {
-        type: DataTypes.TIME
+        type: DataTypes.TIME,
+        primaryKey: true
     }
 },
 {
     freezeTableName: true,
     modelName: "Scheduler"
 });
-
-Customer.belongsToMany(Groomer, { through: Scheduler });
-Groomer.belongsToMany(Customer, { through: Scheduler })
 
 module.exports = Scheduler;
