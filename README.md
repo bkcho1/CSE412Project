@@ -14,10 +14,3 @@ Getting Started Guide:
 2. In terminal type, "git add ."
 3. Next, type "git commit -m "a message you want to put here""
 4. Finally, type "git push"
-
-# TO-DO List (edit as needed):
-1. Main Menu GUI
-2. Scheduling GUI
-3. Help Page (maybe)
-4. Customers GUI
-5. PostGreSQL backend database
