@@ -49,14 +49,7 @@
   #cust-table tr:nth-child(even) {
     background-color: #dddddd;
   }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    gap: 2rem;
-
-  }
-
+  
   .dropdown-form {
     display: flex;
     flex-direction: column;
@@ -80,6 +73,67 @@
 
   #cust-remove-reload:hover {
     background: #ddd;
+  }
+
+  #overlay { 
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+  }
+
+  #overlay-content {
+    background: white;
+    width: 75%;
+    height: 75%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2.5rem;
+  }
+
+  #exit-info-screen {
+    background: none;
+    font-weight: bold;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  #exit-info-screen:hover {
+    cursor: pointer;
+  }
+
+  .more-info {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .more-info:hover {
+    background: #ddd;
+  }
+
+  .left {
+    width: 20%; 
+    float:left;
+    border: 1px solid black;
+    text-align: center;
+  }
+
+
+  .right {
+    width: 75%;
+    float:right
   }
 
 /*

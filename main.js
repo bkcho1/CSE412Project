@@ -13,8 +13,8 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 700,
+        width: 1200,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
@@ -23,7 +23,7 @@ function createWindow() {
     });
 
     mainWindow.loadFile('./renderer/index.html');
-    //mainWindow.removeMenu();
+    mainWindow.removeMenu();
 }
 
 sequelize.sync({ alter: true }).then(() => {
@@ -127,7 +127,7 @@ ipcMain.on('add-dog', (e, options) => {
 
 async function new_dog({ dname, dbreed, dage, dsi, dhc, dcomment, c_key }){
     try {
-        const d = await Dog.create({ name: dname, breed: dbreed, age: dage, specialInstruction: dsi, healthConditions: dhc, comments: dcomment, CustomerId: c_key });
+        await Dog.create({ name: dname, breed: dbreed, age: dage, specialInstructions: dsi, healthConditions: dhc, comments: dcomment, CustomerId: c_key });
         mainWindow.webContents.send('dog-added');
     }
     catch(err){
@@ -205,8 +205,42 @@ ipcMain.on('get-customers', () => {
 
 async function get_customers() {
     try {
-        Customer.findAll().then(c_data => {
+        await Customer.findAll().then(c_data => {
             mainWindow.webContents.send('got-customers', JSON.stringify(c_data, null, 2))
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+ipcMain.on('get-one-customer', (e, cid) => {
+    get_one_customer(cid);
+});
+
+async function get_one_customer(cid) {
+    try {
+        await Customer.findByPk(cid).then(c_data => {
+            mainWindow.webContents.send('got-one-customer', JSON.stringify(c_data, null, 2))
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+ipcMain.on('get-dogs', (e,cid) => {
+    get_dogs(cid);
+});
+
+async function get_dogs(cid){
+    try {
+        await Dog.findAll({
+            where:{
+                CustomerId: cid
+            }
+        }).then(g_data => {
+            mainWindow.webContents.send('got-dogs', JSON.stringify(g_data, null, 2))
         });
     }
     catch(err) {

@@ -153,18 +153,45 @@
             <input id="cust-search" type="text" placeholder="Search...">
         </div>
         <div>
-            <table class="list">
+            <table id="cust-display" class="list">
                 <tr>
                     <th>id</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Phone Number</th>
+                    <th>
                 </tr>
 
                 <tbody id="customer-list">
                 </tbody>
             </table>
         </div> 
+        <div id="overlay" class="hidden">
+            <div id="overlay-content">
+                <button id="exit-info-screen">X</button>
+                <div>
+                    <div class="left">
+                        <div id="left-side-info" class="dropdown-form">
+                        </div>
+                    </div>
+                    <div class="right">
+                        <table class="list">
+                            <tr>
+                                <th>Dog</th>
+                                <th>Breed</th>
+                                <th>Age</th>
+                                <th>Special Instructions</th>
+                                <th>Health Conditions</th>
+                                <th>Comments</th>
+                            </tr>
+            
+                            <tbody id="dog-list">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="groomer-page" class="hidden">

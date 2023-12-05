@@ -26,6 +26,7 @@ const id_removal_button = document.querySelector('#id-removal');
 const namephone_removal_button = document.querySelector('#name-phone-removal');
 const customer_delete_id = document.querySelector('#remove-customer-by-id');
 const customer_delete_namephone = document.querySelector('#remove-customer-by-name-phone');
+const overlay = document.querySelector('#overlay');
 
 const name_container = document.querySelector('#name-container');
 const groomer_container = document.querySelector('#agid-container');
@@ -67,7 +68,6 @@ function fill_groomer_dropdown(data){
 function get_appointments() {
     const gagid = name_container.value;
     const gadate = appointment_date.value;
-
 
     if(gadate)
     {
@@ -307,9 +307,65 @@ function render_customers(data) {
                         <td>${customer_array[i].firstName}</td>
                         <td>${customer_array[i].lastName}</td>
                         <td>${customer_array[i].phoneNum}</td>
+                        <td><button class="more-info" value="${customer_array[i].id}">...</button></td>
                   </tr>`
         customer_list.innerHTML += row
     }
+
+    let more_info_buttons = document.getElementsByClassName('more-info')
+    for(let i = 0; i < more_info_buttons.length; i++){
+        more_info_buttons[i].addEventListener('click', () => {
+            overlay.style.display = 'block';
+            render_info_page(parseInt(more_info_buttons[i].value));
+        });
+    }
+}
+
+function render_info_page(customer_id) {
+    ipcRenderer.send('get-one-customer', customer_id);
+    ipcRenderer.once('got-one-customer', data => {
+        let cust_info = JSON.parse(data);
+        let left_side_info = document.querySelector('#left-side-info');
+        let info = `<h2 style="font-size: 1em">Customer Info</h2>
+                    <p><b>First Name:</b><br>${cust_info.firstName}<p>
+                    <p><b>Last Name:</b><br>${cust_info.lastName}<p>
+                    <p><b>Phone #:</b><br>${cust_info.phoneNum}<p>
+                    <p><b>Address:</b><br>${cust_info.address}<p>
+                    <p><b>Email:</b><br>${cust_info.email}<p>`
+        left_side_info.innerHTML = "";
+        left_side_info.innerHTML += info;
+    });
+
+    ipcRenderer.send('get-dogs', customer_id);
+    ipcRenderer.once('got-dogs', data => {
+        let dog_info = JSON.parse(data);
+        let dog_list = document.querySelector('#dog-list');
+        dog_list.innerHTML = "";
+        let row;
+        for (let i = 0; i < dog_info.length; i++){
+            if(dog_info[i].specialInstructions === null){
+                row = `<tr>
+                            <td>${dog_info[i].name}</td>
+                            <td>${dog_info[i].breed}</td>
+                            <td>${dog_info[i].age}</td>
+                            <td></td>
+                            <td>${dog_info[i].healthConditions}</td>
+                            <td>${dog_info[i].comments}</td>
+                      </tr>`
+            }
+            else{
+                row = `<tr>
+                            <td>${dog_info[i].name}</td>
+                            <td>${dog_info[i].breed}</td>
+                            <td>${dog_info[i].age}</td>
+                            <td>${dog_info[i].specialInstructions}</td>
+                            <td>${dog_info[i].healthConditions}</td>
+                            <td>${dog_info[i].comments}</td>
+                      </tr>`
+            }
+            dog_list.innerHTML += row
+        }
+    });
 }
 
 function remove_customer_by_id(e){
@@ -369,6 +425,10 @@ function remove_customer_by_namephone(e){
         dropdown.classList.remove('active');
     });
 }
+
+document.querySelector('#exit-info-screen').addEventListener('click', () => {
+    overlay.style.display = 'none'
+})
 
 customer_button.addEventListener('click', load_customer_page);
 customer_form.addEventListener('submit', add_customer)
