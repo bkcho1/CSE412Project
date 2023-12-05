@@ -189,8 +189,17 @@ customer_search.addEventListener('keyup', () => {
                         <td>${filtered_list[i].firstName}</td>
                         <td>${filtered_list[i].lastName}</td>
                         <td>${filtered_list[i].phoneNum}</td>
+                        <td><button class="more-info" value="${filtered_list[i].id}">...</button></td>
                     </tr>`
         customer_list.innerHTML += row
+    }
+
+    let more_info_buttons = document.getElementsByClassName('more-info')
+    for(let i = 0; i < more_info_buttons.length; i++){
+        more_info_buttons[i].addEventListener('click', () => {
+            overlay.style.display = 'block';
+            render_info_page(parseInt(more_info_buttons[i].value));
+        });
     }
 });
 
