@@ -6,7 +6,7 @@ Getting Started Guide:
 4. In pgadmin, open the server and login with the credintials you created during install, once in right click on the Login/Group Roles tab and create a new role
 5. Name the role dd_user and set the password to doogiedoos and in the privleges tab give the dd_user Can login? and Superuser? privleges, once done click save
 6. Open a directory of your choosing and run "git clone https://github.com/bkcho1/CSE412Project.git"
-7. After above steps, in terminal run "npm install electron electronmon sequelize pg pg-hstore"
+7. After above steps, in terminal run "npm install"
 8. You can now freely edit the project and to run it in terminal you type: "npx elextronmon ."
 
 # Pushing Changes to the Github Repo:
